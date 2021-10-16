@@ -19,6 +19,7 @@ fastapi = "*"
 uvicorn = "*"
 fastapi-utils = "*"
 aiohttp = "*"
+gunicorn = "*"
 
 [dev-packages]
 

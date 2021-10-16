@@ -46,16 +46,6 @@ def create_request_entry(db:orm.Session, request_body):
     db.flush()
     db.refresh(request_entry)
     return request_entry.id
-
-def get_customer_id(request_body):
-    if isinstance(request_body, str):
-        substring = re.search("customerID=\d*", request_body)
-        if substring:
-            return int(substring[0].split('=')[1])
-        else:
-            return ''
-    else:
-        return request_body['customerID']
         
 def create_stats(db:orm.Session):
     now = datetime.now()
@@ -86,13 +76,15 @@ def get_stats_by_datetime_by_customerID(db:orm.Session, customer_id:int, timesta
 def get_stats_by_datetime(db:orm.Session, timestamp:str):
     return db.query(database.HourlyStatsModel).filter(database.HourlyStatsModel.timestamp.like(timestamp)).all()
 
-
-
-def process_request(body):
-    """
-        Code to process the request goes here
-    """
-    pass
+def get_customer_id(request_body):
+    if isinstance(request_body, str):
+        substring = re.search("customerID=\d*", request_body)
+        if substring:
+            return int(substring[0].split('=')[1])
+        else:
+            return ''
+    else:
+        return request_body['customerID']
     
 def get_invalid_code_description(code_id, db):
     """ 
@@ -177,3 +169,9 @@ def path_parmeters_validation(customer_id:Optional[int] = None, date:Optional[st
 
     if hour and 00<hour>23:
         return "Please enter a valid hour in 24hrs format. i.e a number between 00 - 23"
+
+def process_request(body):
+    """
+        Code to process the request goes here
+    """
+    pass
