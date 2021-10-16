@@ -14,18 +14,18 @@ app = FastAPI()
 
 
 
-# @app.on_event("startup")
-# @repeat_every(seconds=60*60, raise_exceptions=True) 
-# def calculate_stats():
-#     """
-#         Cron job script that will execute every 60 minutes from starttime
-#     """
-#     with sessionmaker.context_session() as db:
-#         print("CRON WORKING")
-#         services.create_stats(db)
-#         print("CRON DONE")
+@app.on_event("startup")
+@repeat_every(seconds=60*60, raise_exceptions=True) 
+def calculate_stats():
+    """
+        Cron job script that will execute every 60 minutes from starttime
+    """
+    with sessionmaker.context_session() as db:
+        print("CRON WORKING" , datetime.now())
+        services.create_stats(db)
+
         
-#     return "success"
+    return "success"
 
 @app.post("/api/")
 async def process_request(request: Request, db:orm.Session = Depends(services.get_db)):

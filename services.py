@@ -72,8 +72,11 @@ def create_stats(db:orm.Session):
                                                         valid_requests_count= valid_requests,
                                                         invalid_requests_count= total_requests-valid_requests,
                                                         timestamp= now ))
-    db.bulk_save_objects(records_to_add)
-    db.commit()
+    try:
+        db.bulk_save_objects(records_to_add)
+        db.commit()
+    except Exception as e:
+        print('Exception occured:', e )
 
 def get_stats_by_datetime_by_customerID(db:orm.Session, customer_id:int, timestamp:str):
     print(customer_id, timestamp)
