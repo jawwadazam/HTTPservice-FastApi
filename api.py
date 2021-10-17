@@ -24,9 +24,6 @@ def calculate_stats():
         print("CRON WORKING" , datetime.now())
         services.create_stats(db)
 
-        
-    return "success"
-
 @app.post("/api/")
 async def process_request(request: Request, db:orm.Session = Depends(services.get_db)):
     try:

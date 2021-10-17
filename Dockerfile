@@ -18,8 +18,7 @@ COPY . .
 # Install Python dependencies
 RUN pip3 install pipenv
 RUN pipenv install --system --skip-lock
-# --deploy --dev
+# expose ports
 EXPOSE 8000/tcp
 
-# ENTRYPOINT [ "/bin/bash" ]
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
